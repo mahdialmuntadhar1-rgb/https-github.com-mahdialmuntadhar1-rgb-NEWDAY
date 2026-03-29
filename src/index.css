@@ -1,0 +1,155 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: "Noto Sans Arabic", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-neon-orange: #ff6b00;
+  --color-neon-blue: #00d2ff;
+  --color-neon-purple: #9d00ff;
+  --color-neon-green: #39ff14;
+  
+  --shadow-neon-orange: 0 0 15px rgba(255, 107, 0, 0.4);
+  --shadow-neon-blue: 0 0 15px rgba(0, 210, 255, 0.4);
+  --shadow-neon-purple: 0 0 15px rgba(157, 0, 255, 0.4);
+  --shadow-neon-green: 0 0 15px rgba(57, 255, 20, 0.4);
+
+  --animate-marquee: marquee 20s linear infinite;
+  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-[#050505] text-white antialiased selection:bg-neon-orange/30 selection:text-neon-orange;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 107, 0, 0.4);
+    box-shadow: 0 0 10px rgba(255, 107, 0, 0.2);
+  }
+
+  /* High Contrast Mode */
+  [data-contrast="high"] {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --accent-color: #ffff00;
+  }
+
+  [data-contrast="high"] body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  [data-contrast="high"] .bg-zinc-900,
+  [data-contrast="high"] .bg-white\/5,
+  [data-contrast="high"] .bg-\[\#0a0a0a\] {
+    background-color: #111111 !important;
+    border: 2px solid #ffffff !important;
+  }
+
+  [data-contrast="high"] .text-white\/40,
+  [data-contrast="high"] .text-white\/60,
+  [data-contrast="high"] .text-white\/20 {
+    color: #ffffff !important;
+    opacity: 1 !important;
+  }
+
+  [data-contrast="high"] .border-white\/10,
+  [data-contrast="high"] .border-white\/5 {
+    border-color: #ffffff !important;
+  }
+
+  [data-contrast="high"] .bg-neon-orange,
+  [data-contrast="high"] .bg-orange-500 {
+    background-color: #ffff00 !important;
+    color: #000000 !important;
+  }
+
+  [data-contrast="high"] .text-neon-orange,
+  [data-contrast="high"] .text-orange-500 {
+    color: #ffff00 !important;
+  }
+
+  [data-contrast="high"] .shadow-neon-orange,
+  [data-contrast="high"] .shadow-neon-blue,
+  [data-contrast="high"] .shadow-neon-purple,
+  [data-contrast="high"] .shadow-neon-green {
+    box-shadow: none !important;
+    border: 1px solid #ffffff !important;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+  }
+  
+  .glass-hover {
+    @apply hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,107,0,0.15)] transition-all duration-500;
+  }
+
+  .neon-glow-orange {
+    @apply shadow-[0_0_15px_rgba(255,107,0,0.3)] border-neon-orange/50;
+  }
+
+  .neon-glow-blue {
+    @apply shadow-[0_0_15px_rgba(0,210,255,0.3)] border-neon-blue/50;
+  }
+
+  .animated-gradient-border {
+    position: relative;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(var(--angle), #ff6b00, #00d2ff, #9d00ff, #ff6b00);
+    animation: rotate-gradient 4s linear infinite;
+  }
+
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @keyframes rotate-gradient {
+    to { --angle: 360deg; }
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .neon-text-orange {
+    @apply text-neon-orange drop-shadow-[0_0_8px_rgba(255,107,0,0.5)];
+  }
+
+  .neon-border-orange {
+    @apply border-neon-orange shadow-[0_0_10px_rgba(255,107,0,0.3)];
+  }
+}
